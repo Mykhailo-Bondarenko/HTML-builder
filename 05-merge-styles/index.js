@@ -6,7 +6,8 @@ const writeStream = fs.createWriteStream(to, 'utf-8');
 
 fs.readdir(from, { withFileTypes: true, encoding: 'utf-8' }, (e, data) => {
   if (e) console.log(e);
-  data.filter(value => value.name.endsWith('.css'))
+  data.filter(value => value.isFile())
+    .filter(value => value.name.endsWith('.css'))
     .forEach(value => {
       const readStream = fs.createReadStream(path.join(from, value.name));
       readStream.pipe(writeStream);
